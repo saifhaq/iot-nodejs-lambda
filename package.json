@@ -1,0 +1,21 @@
+{
+  "name": "iot-nodejs-lambda",
+  "version": "2.0.0",
+  "description": "I18n version of fact skill.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "alexa",
+    "skill",
+    "fact"
+  ],
+  "author": "Amazon.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "ask-sdk": "^2.0.0"
+  },
+  "devDependencies": {}
+}
