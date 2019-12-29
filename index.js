@@ -206,9 +206,19 @@ const SetDesiredTemperatureIntent_Handler =  {
         // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
         //   SLOT: desiredTemp 
         if (slotValues.desiredTemp.heardAs) {
-            slotStatus += ' slot desiredTemp was heard as ' + slotValues.desiredTemp.heardAs + '. ';
+            axios.post(`https://saifhaq.com/iot/update/desiredtemp/${slotValues.desiredTemp.heardAs}`, {
+                username: 'saif',
+                password: 'someEncryptedPassword?'
+              })
+              .then((res) => {
+                  console.log("It worked!");
+              })
+              .catch((error) => {
+                console.error(error);
+              });   
+              slotStatus += `Okay! Room temperature is changing accordingly!`; 
         } else {
-            slotStatus += 'slot desiredTemp is empty. ';
+            slotStatus += `Sorry, I didn't hear the temperature correctly.`;
         }
         if (slotValues.desiredTemp.ERstatus === 'ER_SUCCESS_MATCH') {
             slotStatus += 'a valid ';
