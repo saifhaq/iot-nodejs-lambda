@@ -1,11 +1,11 @@
 // Lambda Function code for Alexa.
-// Paste this into your index.js file. 
 
 const Alexa = require("ask-sdk");
 const https = require("https");
 const http = require("http");
 const axios = require('axios');
 
+//Promise to get latest data from Node Endpoint from saifhaq.com
 const getLatestTempData = function() {
     return new Promise((resolve, reject) => {
         const request = http.get('http://206.189.123.64/iot/latest', response => {
@@ -42,24 +42,11 @@ const invocationName = "esp sensor";
 function getMemoryAttributes() {   const memoryAttributes = {
        "history":[],
 
-        // The remaining attributes will be useful after DynamoDB persistence is configured
        "launchCount":0,
        "lastUseTimestamp":0,
 
        "lastSpeechOutput":{},
        "nextIntent":[]
-
-       // "favoriteColor":"",
-       // "name":"",
-       // "namePronounce":"",
-       // "email":"",
-       // "mobileNumber":"",
-       // "city":"",
-       // "state":"",
-       // "postcode":"",
-       // "birthday":"",
-       // "bookmark":0,
-       // "wishlist":[],
    };
    return memoryAttributes;
 };
@@ -103,13 +90,6 @@ const AMAZON_HelpIntent_Handler =  {
         let sampleIntent = randomElement(intents);
 
         let say = 'You asked for help. '; 
-
-        // let previousIntent = getPreviousIntent(sessionAttributes);
-        // if (previousIntent && !handlerInput.requestEnvelope.session.new) {
-        //     say += 'Your last intent was ' + previousIntent + '. ';
-        // }
-        // say +=  'I understand  ' + intents.length + ' intents, '
-
         say += ' Here something you can ask me, ' + getSampleUtterance(sampleIntent);
 
         return responseBuilder
@@ -201,10 +181,7 @@ const SetDesiredTemperatureIntent_Handler =  {
         let resolvedSlot;
 
         let slotValues = getSlotValues(request.intent.slots); 
-        // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
 
-        // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
-        //   SLOT: desiredTemp 
         if (slotValues.desiredTemp.heardAs) {
             axios.post(`https://saifhaq.com/iot/update/desiredtemp/${slotValues.desiredTemp.heardAs}`, {
                 username: 'saif',
